@@ -1,11 +1,10 @@
 import os
 import keepalive
-from src.actions import Actions
-from src.resistances import Resistances
-from src.helpers import Helpers
-from src.char_tools import CharTools
-
 from discord.ext import commands
+from src.skill_tools import SkillTools
+from src.sheet_tools import SheetTools
+from src.helpers import Helpers
+
 
 bot = commands.Bot(command_prefix='!')
 
@@ -14,10 +13,9 @@ async def is_ready():
     print("Online")
 
 
-bot.add_cog(Actions(bot))
-bot.add_cog(Resistances(bot))
+bot.add_cog(SkillTools(bot))
+bot.add_cog(SheetTools(bot))
 bot.add_cog(Helpers(bot))
-bot.add_cog(CharTools(bot))
 
 
 keepalive.keep_alive()

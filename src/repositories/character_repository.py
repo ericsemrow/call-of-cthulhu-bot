@@ -13,7 +13,8 @@ class CharacterRepository(Firestore):
     active_char = user.active_character
     doc = user_repo.get_user_ref( user_id ).collection(self.COL).document(active_char).get()
     if doc.exists:
-      return Character().from_dict(doc.to_dict())
+      char = Character()
+      return char.from_dict(doc.to_dict())
   
   def store_character_for_user(self, char: Character, user_id):
     user_repo = UserRepository()
@@ -32,30 +33,7 @@ class CharacterRepository(Firestore):
     
     return char
 
-  def add_xp( self, user, char: Character, attr: str, amount: int):
-    types = {
-      "pl": "playbook_xp",
-      "in": "insight",
-      "pr": "prowess",
-      "re": "resolve"
-    }
-    abbrev = attr[0:2]
-    if abbrev == "pl":
-      char.playbook_xp += amount
-      attribute = char
-    else:
-      try:
-        attribute = getattr(char, types[abbrev])
-        print (attribute.xp)
-        attribute.xp += amount
-      except KeyError:
-        return None
-    
-    self.store_character_for_user( char, user)
-    
-    return attribute
-
-    
+      
   def getEmbed(self, ctx, char: Character):
     embed = discord.Embed(title=char.name, description=str(char))
     

@@ -1,7 +1,7 @@
-# Scum and Villainy Bot
+# Call of Cthulhu Bot
 
 ## Invite bot to your server
-1. Click or copy the following link: [https://discord.com/api/oauth2/authorize?client_id=880614582782148669&permissions=11328&scope=bot](https://discord.com/api/oauth2/authorize?client_id=880614582782148669&permissions=11328&scope=bot)
+1. Click or copy the following link: [https://discord.com/api/oauth2/authorize?client_id=914897470402740284&permissions=76864&scope=bot](https://discord.com/api/oauth2/authorize?client_id=914897470402740284&permissions=76864&scope=bot)
 2. Select your server from the dropdown and select "Continue"
 3. Agree to the pre-selected permissions
 4. Click "Authorize"

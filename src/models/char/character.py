@@ -1,234 +1,195 @@
-from src.models.char.insight import InsightModel
-from src.models.char.prowess import ProwessModel
-from src.models.char.resolve import ResolveModel
-from src.models.char.armor import ArmorModel
+from src.models.char.skills import SkillsModel
+from src.models.char.attacks import AttacksModel
 from src.models.char.from_raw import FromRaw
 
 class Character(FromRaw):
 
   @property
-  def insight(self):
-    return self._insight
+  def attacks(self):
+    return self._attacks
 
   @property
-  def prowess(self):
-    return self._prowess
+  def skills(self):
+    return self._skills
 
-  @property
-  def resolve(self):
-    return self._resolve
 
-  @property
-  def armor(self):
-    return self._armor
 
-  @property
-  def trauma(self):
-    return self._trauma
+  def __init__(self, id=None,owner="",name="",pronouns="",occupation="",birthplace="",residence="",sex="",age="",st="",con="",dex="",powr="",app="",i="",siz="",edu="",luck="",move="",build="",san="",hp_curr="",hp_max="",mp_curr="",mp_max="",db="",attacks=[],skills=[]):
 
-  @property
-  def harm(self):
-    return self._harm
-
-  @property
-  def healing(self):
-    return self._healing
-
-  @property
-  def abilities(self):
-    return self._abilities
-
-  def __init__(self, id=None,playbook="",name="",crew="",alias="",look="",heritage="",background="",vice="",stress="",playbook_xp=0,insight=None,prowess=None,resolve=None,armor=None,trauma=None,harm=[],healing=[],abilities=[]):
-
-    if insight is None:
-      insight = InsightModel()
-    if prowess is None:
-      prowess = ProwessModel()
-    if resolve is None:
-      resolve = ResolveModel()
-    if armor is None:
-      armor = ArmorModel()
-    if abilities is None:
-      abilities
+    if attacks is None:
+      attacks = AttacksModel()
+    if skills is None:
+      skills = SkillsModel()
 
     self.id = id
-    self.playbook = playbook
+    self.owner = owner
     self.name = name
-    self.crew = crew
-    self.alias = alias
-    self.look = look
-    self.heritage = heritage
-    self.background = background
-    self.vice = vice
-    self.stress = stress
-    self.playbook_xp = playbook_xp
-    
+    self.pronouns = pronouns
+    self.occupation = occupation
+    self.birthplace = birthplace
+    self.residence = residence
+    self.sex = sex
+    self.age = age
+    self.str = st
+    self.con = con
+    self.dex = dex
+    self.pow = powr
+    self.app = app
+    self.int = i
+    self.siz = siz
+    self.edu = edu
+    self.luck = luck
+    self.move = move
+    self.build = build
+    self.san = san
+    self.hp_curr = hp_curr
+    self.hp_max = hp_max
+    self.mp_curr = mp_curr
+    self.mp_max = mp_max
+
+    self.db = db
     # These might need additional objects
 
-    self._insight = insight
-    self._prowess = prowess
-    self._resolve = resolve
-    self._armor = armor
+    self._skills = skills
+    self._attacks = attacks
 
-    #not implemented yet
-    self._trauma = trauma
-    self._harm = harm
-    self._healing = healing
-    self._abilities = abilities
+   
 
-  @insight.setter
-  def insight(self, val):
-    if isinstance(val, InsightModel):
-      self._insight = val
+  @skills.setter
+  def skills(self, val):
+    if isinstance(val, SkillsModel):
+      self._skills = val
+    elif isinstance(val, list):
+      self._skills = SkillsModel.from_dict(val)
     elif isinstance(val, dict):
-      self._insight = InsightModel().from_raw(val)
+      self._skills = SkillsModel.from_raw(val)
 
-  @prowess.setter
-  def prowess(self, val: ProwessModel):
-    if isinstance(val, ProwessModel):
-      self._prowess = val
-    elif isinstance(val, dict):
-      self._prowess = ProwessModel().from_raw(val)
-    
-  @resolve.setter
-  def resolve(self, val: ResolveModel):
-    if isinstance(val, ResolveModel):
-      self._resolve = val
-    elif isinstance(val, dict):
-      self._resolve = ResolveModel().from_raw(val)
 
-  @armor.setter
-  def armor(self, val: ArmorModel):
-    if isinstance(val, ArmorModel):
-      self._armor = val
+  @attacks.setter
+  def attacks(self, val):
+    if isinstance(val, AttacksModel):
+      self._attacks = val
+    elif isinstance(val, list):
+      self._attacks = AttacksModel.from_dict(val)
     elif isinstance(val, dict):
-      self._armor = ArmorModel().from_raw(val)
-    
-  @trauma.setter
-  def trauma(self, val: list):
-    self._trauma = val
-    
-  @harm.setter
-  def harm(self, val: list):
-    self._harm = val
-    
-  @healing.setter
-  def healing(self, val: list):
-    self._healing = val
-    
-  @abilities.setter
-  def abilities(self, val: list):
-    self._abilities = val
+      self._attacks = AttacksModel.from_raw(val)
+
+
+
 
   def from_dict(self, source: dict):
     self.set_basic_vars(source)
     self.id = source["id"]
+    self.owner = source["owner"]
     
-    # These might need additional objects
-    self._insight = InsightModel().from_dict(source["insight"])
-    self._prowess = ProwessModel().from_dict(source["prowess"])
-    self._resolve = ResolveModel().from_dict(source["resolve"])
-    self._armor = ArmorModel().from_dict(source["armor"])
-    self.stress = source["stress"]
-    self._abilities = source["abilities"]
-    self.playbook_xp = source["playbook_xp"]
-
-    #Not implemented yet
-    #self.trauma = source["trauma"]
-    #self.harm = source["harm"]
-    #self.healing = source["healing"]
-
+    self.skills = source["skills"]
+    self.attacks = source["attacks"]
+    
     return self
     
 
   def to_dict(self):
     return {
       "id": self.id,
-      "playbook": self.playbook,
+      "owner": self.owner,
       "name": self.name,
-      "crew": self.crew,
-      "alias": self.alias,
-      "look": self.look,
-      "heritage": self.heritage,
-      "background": self.background,
-      "vice": self.vice,
-      "stress": self.stress,
-      "playbook_xp": self.playbook_xp,
-      # These might need additional objects
-      "insight": self._insight.to_dict(),
-      "prowess": self._prowess.to_dict(),
-      "resolve": self._resolve.to_dict(),
-      "armor": self._armor.to_dict(),
-      #"trauma": self.trauma.to_dict(),
-      #"harm": self.harm.to_dict(),
-      #"healing": self.healing.to_dict(),
-      "abilities": self._abilities
+      "pronouns": self.pronouns,
+      "occupation": self.occupation,
+      "birthplace": self.birthplace,
+      "residence": self.residence,
+      "sex": self.sex,
+      "age": self.age,
+      "str": self.str,
+      "con": self.con,
+      "dex": self.dex,
+      "pow": self.pow,
+      "app": self.app,
+      "int": self.int,
+      "siz": self.siz,
+      "edu": self.edu,
+      "luck": self.luck,
+      "move": self.move,
+      "build": self.build,
+      "san": self.san,
+
+      
+      "hp_curr": self.hp_curr,
+      "hp_max": self.hp_max,
+      "mp_curr": self.mp_curr,
+      "mp_max": self.mp_max,
+
+      "db": self.db,
+
+      "attacks": self._attacks.to_dict(),
+
+      "skills": self._skills.to_dict()
     }
   
   def from_raw(self, raw: dict):
     """
-      {"id","playbook","name","crew","alias","look","heritage","heritage_override","background","background_override","vice","vice_override","stress_1","stress_2","stress_3","stress_4","stress_5","stress_6","stress_7","stress_8","stress_9","trauma_1","trauma_2","trauma_3","trauma_4","harm1_1","harm1_2","harm2_1","harm2_2","harm3","armor","heavy","special","ability1_check","ability1","ability2_check","ability2","ability3_check","ability3","ability4_check","ability4","ability5_check","ability5","ability6_check","ability6","ability7_check","ability7","ability8_check","ability8","ability9_check","ability9","ability10_check","ability10","ability11_check","ability11","ability12_check","ability12","playbook_xp1","playbook_xp2","playbook_xp3","playbook_xp4","playbook_xp5","playbook_xp6","playbook_xp7","playbook_xp8","insight_xp1","insight_xp2","insight_xp3","insight_xp4","insight_xp5","insight_xp6","prowess_xp1","prowess_xp2","prowess_xp3","prowess_xp4","prowess_xp5","prowess_xp6","resolve_xp1","resolve_xp2","resolve_xp3","resolve_xp4","resolve_xp5","resolve_xp6","doctor1","doctor2","doctor3","doctor4","hack1","hack2","hack3","hack4","rig1","rig2","rig3","rig4","study1","study2","study3","study4","helm1","helm2","helm3","helm4","scramble1","scramble2","scramble3","scramble4","scrap1","scrap2","scrap3","scrap4","sulk1","skulk2","skulk3","skulk4","attune1","attune2","attune3","attune4","command1","command2","command3","command4","consort1","consort2","consort3","consort4","sway1","sway2","sway3","sway4"}
+      {name,pronouns,occupation,birthplace,residence,sex,age,str,con,dex,pow,app,int,siz,edu,luck,move,build,san,hp_curr,hp_max,mp_curr,mp_max,used_01,name_01,val_01,used_02,name_02,val_02,used_03,name_03,val_03,used_04,name_04,val_04,used_05,name_05,val_05,used_06,name_06,val_06,used_07,name_07,val_07,used_08,name_08,val_08,used_09,name_09,val_09,used_10,name_10,val_10,used_11,name_11,val_11,used_12,name_12,val_12,used_13,name_13,val_13,used_14,name_14,val_14,used_15,name_15,val_15,used_16,name_16,val_16,used_17,name_17,val_17,used_18,name_18,val_18,used_19,name_19,val_19,used_20,name_20,val_20,used_21,name_21,val_21,used_22,name_22,val_22,used_23,name_23,val_23,used_24,name_24,val_24,used_25,name_25,val_25,used_26,name_26,val_26,used_27,name_27,val_27,used_28,name_28,val_28,used_29,name_29,val_29,used_30,name_30,val_30,used_31,name_31,val_31,used_32,name_32,val_32,used_33,name_33,val_33,used_34,name_34,val_34,used_35,name_35,val_35,used_36,name_36,val_36,used_37,name_37,val_37,used_38,name_38,val_38,used_39,name_39,val_39,used_40,name_40,val_40,used_41,name_41,val_41,used_42,name_42,val_42,used_43,name_43,val_43,used_44,name_44,val_44,used_45,name_45,val_45,used_46,name_46,val_46,used_47,name_47,val_47,used_48,name_48,val_48,used_49,name_49,val_49,used_50,name_50,val_50,used_51,name_51,val_51,used_52,name_52,val_52,used_53,name_53,val_53,used_54,name_54,val_54,used_55,name_55,val_55,used_56,name_56,val_56,used_57,name_57,val_57,used_58,name_58,val_58,used_59,name_59,val_59,used_60,name_60,val_60,used_61,name_61,val_61,used_62,name_62,val_62,used_63,name_63,val_63,used_64,name_64,val_64,used_65,name_65,val_65,used_66,name_66,val_66,used_67,name_67,val_67,used_68,name_68,val_68,used_69,name_69,val_69,used_70,name_70,val_70,used_71,name_71,val_71,used_72,name_72,val_72,db,atk_name_01,atk_damage_01,atk_range_01,atk_num_attacks_01,atk_name_02,atk_damage_02,atk_range_02,atk_num_attacks_02,atk_name_03,atk_damage_03,atk_range_03,atk_num_attacks_03,atk_name_04,atk_damage_04,atk_range_04,atk_num_attacks_04,atk_name_05,atk_damage_05,atk_range_05,atk_num_attacks_05,atk_name_06,atk_damage_06,atk_range_06,atk_num_attacks_06,atk_name_07,atk_damage_07,atk_range_07,atk_num_attacks_07,atk_name_08,atk_damage_08,atk_range_08,atk_num_attacks_08,atk_name_09,atk_damage_09,atk_range_09,atk_num_attacks_09,atk_name_10,atk_damage_10,atk_range_10,atk_num_attacks_10,atk_name_11,atk_damage_11,atk_range_11,atk_num_attacks_11,atk_name_12,atk_damage_12,atk_range_12,atk_num_attacks_12,atk_name_13,atk_damage_13,atk_range_13,atk_num_attacks_13,atk_name_14,atk_damage_14,atk_range_14,atk_num_attacks_14,atk_name_15,atk_damage_15,atk_range_15,atk_num_attacks_15,atk_name_16,atk_damage_16,atk_range_16,atk_num_attacks_16}
     """
     
-    self.id = raw["id"] + raw["playbook"]
     self.set_basic_vars(raw)
     
-    self.insight = raw
-    self.prowess = raw
-    self.resolve = raw
-    self.armor = raw
-
-    # Still to implement
-    
-    #
-    #self._trauma = trauma
-    #self._harm = harm
-    #self._healing = healing
-    #self._abilities = abilities
-    self.stress = self.get_total(raw, 9, "stress_")
-    self.playbook_xp = self.get_total(raw, 8, "playbook_xp")
-
-    self.abilities = []
-    for i in range(12): #12 possible abilities
-      if raw["ability"+str(i+1)+"_check"] is not None:
-        self.abilities.append(raw["ability"+str(i+1)].strip())
+    self.skills = raw
+    self.attacks = raw
     
     return self
 
   def set_basic_vars(self, source):
-    self.playbook = source["playbook"]
+
+    self.id = source["id"]
     self.name = source["name"]
-    self.crew = source["crew"]
-    self.alias = source["alias"]
-    self.look = source["look"]
-    self.heritage = source["heritage"]
-    self.background = source["background"]
-    self.vice = source["vice"]
+    self.pronouns = source["pronouns"]
+    self.occupation = source["occupation"]
+    self.birthplace = source["birthplace"]
+    self.residence = source["residence"]
+    self.sex = source["sex"]
+    self.age = source["age"]
+    self.str = int(source["str"])
+    self.con = int(source["con"])
+    self.dex = int(source["dex"])
+    self.pow = int(source["pow"])
+    self.app = int(source["app"])
+    self.int = int(source["int"])
+    self.siz = int(source["siz"])
+    self.edu = int(source["edu"])
+    self.luck = int(source["luck"])
+    self.move = int(source["move"])
+    self.build = int(source["build"])
+    self.san = int(source["san"])
+
+    
+    self.hp_curr = int(source["hp_curr"])
+    self.hp_max = int(source["hp_max"])
+    self.mp_curr = int(source["mp_curr"])
+    self.mp_max = int(source["mp_max"])
+
+    self.db = source["db"]
 
   def __str__(self):
-    abilities = str('\n\n'.join(self.abilities))
 
     return f"""
     **Name:** {self.name}
-    **Crew:** {self.crew}
-    **Alias:** {self.alias}
-    **Look:** {self.look}
-    **Heritage:** {self.heritage}
-    **Background:** {self.background}
-    **Vice:** {self.vice}
-
-    **Playbook XP:** {self.num_to_dots(self.playbook_xp, 8)}
-
-    {str(self._insight)}
-
-    {str(self._prowess)}
+    **Pronouns:** {self.pronouns}
+    **Occupation:** {self.occupation}
+    **Birthplace:** {self.birthplace}
+    **Residence:** {self.residence}
+    **Sex:** {self.sex} **Age:** {self.age}
     
-    {str(self._resolve)}
+    **Characteristics**
+    ```STR: {self.str} SIZ: {self.siz}
+CON: {self.con} POW: {self.pow}
+DEX: {self.dex} APP: {self.app}
+INT: {self.int} EDU: {self.edu}```
 
-    {str(self._armor)}
-    
-    **Abilities**
-    {abilities}"""
+    Hit Points: {self.hp_curr}/{self.hp_max}
+    Magic Points: {self.mp_curr}/{self.mp_max}
+    Luck: {self.luck}
+    Sanity: {self.san}
+
+    """
 
   def __repr__(self):
     return self.to_dict()

@@ -1,0 +1,42 @@
+{ 
+  "str": {
+    "name": "Strength",
+    "abbr": "STR",
+    "desc": "Measures the raw physical power your investigator can bring to bear."
+  },
+  "con": {
+    "name": "Constitution",
+    "abbr": "CON",
+    "desc": "Is a measure of the health andhardiness of your investigator."
+  },
+  "pow": {
+    "name": "Power",
+    "abbr": "POW",
+    "desc": "Is a combination of force of will, spirit,and mental stability."
+  },
+  "dex": {
+    "name": "Dexterity",
+    "abbr": "DEX",
+    "desc": "Is a measure of your investigator's physical agility and speed."
+  },
+  "app": {
+    "name": "Appearance",
+    "abbr": "APP",
+    "desc": "Measures the physical appeal of your character."
+  },
+  "siz": {
+    "name": "Size",
+    "abbr": "SIZ",
+    "desc": "Reflects your investigator's combined height and weight."
+  },
+  "int": {
+    "name": "Intelligence",
+    "abbr": "INT",
+    "desc": "Is a rough measure of your investigator's cunning and ability to make leaps of logic and intuition."
+  },
+  "edu": {
+    "name": "Education",
+    "abbr": "EDU",
+    "desc": "Is a measure of the knowledge that your investigator has accumulated through formal education, or the venerated _School of Hard Knocks._"
+  }
+}

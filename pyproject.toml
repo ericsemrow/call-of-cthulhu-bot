@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "repl_python3_scum-and-villainy"
+name = "repl_python3_call_of_cthulhu_bot"
 version = "0.1.0"
 description = ""
 authors = ["EricSemrow <<>>"]
