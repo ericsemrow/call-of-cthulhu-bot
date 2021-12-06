@@ -39,8 +39,6 @@ You can update your character by running this bot again. Doing so will overwrite
 
 Prints a copy of your transferred sheet to that channel.
 
-TODO: make option to print skills as well (its long)
-
 ### san
 #### !san [value]
 

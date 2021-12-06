@@ -34,7 +34,3 @@ class CharacterRepository(Firestore):
     return char
 
       
-  def getEmbed(self, ctx, char: Character):
-    embed = discord.Embed(title=char.name, description=str(char))
-    
-    return embed

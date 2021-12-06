@@ -5,7 +5,7 @@ from src.repositories.character_repository import CharacterRepository
 import argparse
 
 
-parser = argparse.ArgumentParser(description='Take in params')
+parser = argparse.ArgumentParser(description='Take in params for skills')
 parser.add_argument('-b', "--bonus", type=int, help='Bonus die to apply to the roll')
 parser.add_argument('-p', "--penalty", type=int, help='Penalty dice to apply to the roll')
 parser.add_argument('option', type=str, help='A skill roll')
